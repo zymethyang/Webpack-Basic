@@ -1,13 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const VENDOR_LIBS = [
+    'axios', 'bootstrap', 'jquery', 'popper.js', 'react', 'react-dom', 'react-redux', 'react-router-dom', 'redux', 'redux-thunk'
+];
 
 module.exports = {
     entry: {
-        bundle: './src/index.js'
+        bundle: './src/index.js',
+        vendor: VENDOR_LIBS
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: '[name].[chunkhash].js'
     },
     module: {
         rules: [
@@ -36,6 +41,9 @@ module.exports = {
             'jQuery': 'jquery',
             'window.$': 'jquery',
             'window.jQuery': 'jquery'
+        }),
+        new HtmlWebpackPlugin({
+            template:'src/index.html'
         })
     ]
 }
